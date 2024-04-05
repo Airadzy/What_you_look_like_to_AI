@@ -1,0 +1,9 @@
+{
+  "ffmpeg_path": "C:/Program Files/ffmpeg-master-latest-win64-gpl-shared/bin",
+  "ffmpeg_exe": "C:/Program Files/ffmpeg-master-latest-win64-gpl-shared/bin/ffmpeg.exe",
+  "ffprobe_exe": "C:/Program Files/ffmpeg-master-latest-win64-gpl-shared/bin/ffprobe.exe",
+  "openai_api_key": "[xxx]",
+  "elevenlabs_url": "[xxx]",
+  "elevenlabs_api_key": "[xxx]",
+  "audio_file_path": "[xxx]"
+}
