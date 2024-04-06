@@ -19,8 +19,9 @@ os.environ["FFMPEG"] = os.path.abspath(config["ffmpeg_exe"])
 os.environ["FFPROBE"] = os.path.abspath(config["ffprobe_exe"])
 
 
-def text_generator(prediction_string):
+def text_generator(prediction_string, style):
     # Use the API key from config
+    style = 'in the style of' + style
     client = OpenAI(api_key=config["openai_api_key"])
     # Setting max_tokens to 256 to approximate a limit of 1024 characters
     max_tokens = 100
@@ -28,7 +29,7 @@ def text_generator(prediction_string):
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system",
-             "content": "create a text that describes a person with the following attributes in the style of Donald Trump"},
+             "content": f"create a text that describes a person with the following attributes {style}"},
             {"role": "user", "content": f"{prediction_string}"}
         ],
         max_tokens=max_tokens  # Add the max_tokens parameter here
