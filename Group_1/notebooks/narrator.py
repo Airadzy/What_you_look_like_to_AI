@@ -5,6 +5,9 @@ from pydub import AudioSegment
 from pydub.playback import _play_with_simpleaudio
 import json
 import time
+import prediction
+import take_img
+import simpleaudio
 
 # Load configuration
 with open('config.json') as config_file:
@@ -15,15 +18,15 @@ os.environ["PATH"] += os.pathsep + config["ffmpeg_path"]
 os.environ["FFMPEG"] = os.path.abspath(config["ffmpeg_exe"])
 os.environ["FFPROBE"] = os.path.abspath(config["ffprobe_exe"])
 
-def text_generator():
+def text_generator(prediction_string):
     # Use the API key from config
     client = OpenAI(api_key=config["openai_api_key"])
 
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "create a text that describes a person with the following attributes but give it as riddles"},
-            {"role": "user", "content": "Blue eye - Yes, Black hair - No, Mustache - Yes"}
+            {"role": "system", "content": "create a text that describes a person with the following attributes in the style of Donald Trump"},
+            {"role": "user", "content": f"{prediction}"}
         ]
     )
     print(completion.choices[0])
@@ -54,12 +57,18 @@ def fetch_and_play_audio():
     _play_with_simpleaudio(audio)
 
 def main():
-    while True:
-        print("👀 David is watching...")
-        generated_text = text_generator()
-        create_audio(generated_text)
-        fetch_and_play_audio()
-        time.sleep(10)
+
+    # take photo
+    image = take_img.take_photo()
+
+    # Run prediction
+    prediction_string = prediction.run_prediction(image)
+
+    # generate text and text2audio
+    print("👀 David is watching...")
+    generated_text = text_generator(prediction_string)
+    create_audio(generated_text)
+    fetch_and_play_audio()
 
 if __name__ == "__main__":
     main()
