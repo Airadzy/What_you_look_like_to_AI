@@ -4,6 +4,8 @@ import requests
 from pydub import AudioSegment
 from pydub.playback import _play_with_simpleaudio
 import json
+from io import BytesIO
+import tempfile
 import time
 
 import take_img
@@ -52,15 +54,29 @@ def create_audio(text):
         "Content-Type": "application/json"
     }
 
+
     response = requests.post(config["elevenlabs_url"], json=payload, headers=headers)
-    with open('output.mp3', 'wb') as f:
-        for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
-            if chunk:
-                f.write(chunk)
 
+    # Create an in-memory buffer to store audio data
+    audio_data = BytesIO()
+    for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
+        if chunk:
+            audio_data.write(chunk)
 
-def fetch_and_play_audio():
-    audio = AudioSegment.from_mp3('output.mp3')
+    # Seek to the beginning of the buffer
+    audio_data.seek(0)
+
+    # Load the audio data as an AudioSegment
+    audio = AudioSegment.from_file(audio_data)
+
+    # Convert AudioSegment to NumPy array
+    audio_np = audio.get_array_of_samples()
+
+    return response
+
+def fetch_and_play_audio(text):
+    audio_file_path = create_audio(text)
+    audio = AudioSegment.from_mp3(audio_file_path)
     _play_with_simpleaudio(audio)
 
 # def main():

@@ -33,7 +33,7 @@ def run_prediction(img):
     predictions = model.predict(img)
     # print("Predictions:", predictions)
 
-    predictions = np.where(predictions > 0.5, 1, 0)
+    predictions = np.where(predictions > 0.4, 1, 0)
     connections = pd.DataFrame(predictions, columns=column_names[1:])
     pd.set_option("display.max_columns", None)
 
