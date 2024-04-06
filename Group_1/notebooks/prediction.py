@@ -21,6 +21,7 @@ column_names = ['image_id', '5_o_Clock_Shadow', 'Arched_Eyebrows', 'Attractive',
                 'Wearing_Hat', 'Wearing_Lipstick', 'Wearing_Necklace',
                 'Wearing_Necktie', 'Young']
 
+
 def run_prediction(img):
     img = np.expand_dims(img, axis=0)
     img = img = img / 255.
