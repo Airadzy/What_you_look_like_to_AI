@@ -24,7 +24,7 @@ column_names = ['image_id', '5_o_Clock_Shadow', 'Arched_Eyebrows', 'Attractive',
 
 def run_prediction(img):
     img = np.expand_dims(img, axis=0)
-    img = img = img / 255.
+    img = img / 255.
     home_dir = os.path.expanduser("~")
     downloads_path_os = os.path.join(home_dir, 'Downloads')
     h5_file_path = os.path.join(downloads_path_os, 'RESNET_MODEL.h5')
