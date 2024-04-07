@@ -7,6 +7,7 @@ import json
 from io import BytesIO
 import tempfile
 import time
+import numpy as np
 
 import take_img
 import simpleaudio
@@ -59,7 +60,7 @@ def create_audio(text):
 
     # Create an in-memory buffer to store audio data
     audio_data = BytesIO()
-    for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
+    for chunk in response.iter_content(chunk_size=1024):
         if chunk:
             audio_data.write(chunk)
 
@@ -70,9 +71,15 @@ def create_audio(text):
     audio = AudioSegment.from_file(audio_data)
 
     # Convert AudioSegment to NumPy array
-    audio_np = audio.get_array_of_samples()
+    audio_np = np.array(audio.get_array_of_samples())
 
-    return response
+    # Convert the NumPy array back to an AudioSegment
+    audio_output = AudioSegment(audio_np.tobytes(), frame_rate=audio.frame_rate, sample_width=audio.sample_width,
+                                channels=audio.channels)
+
+    # Convert the AudioSegment to bytes
+    audio_bytes = audio_output.export(format="mp3").read()
+    return audio_bytes
 
 def fetch_and_play_audio(text):
     audio_file_path = create_audio(text)
