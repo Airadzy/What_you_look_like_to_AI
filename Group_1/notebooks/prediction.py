@@ -9,7 +9,7 @@ import tensorflow as tf
 print("Keras version:", keras.__version__)
 print("TensorFlow version:", tf.__version__)  # make sure its 2.15.0 !!!!
 
-feature_values = []
+
 column_names = ['image_id', '5_o_Clock_Shadow', 'Arched_Eyebrows', 'Attractive',
                 'Bags_Under_Eyes', 'Bald', 'Bangs', 'Big_Lips', 'Big_Nose',
                 'Black_Hair', 'Blond_Hair', 'Blurry', 'Brown_Hair', 'Bushy_Eyebrows',
@@ -23,6 +23,7 @@ column_names = ['image_id', '5_o_Clock_Shadow', 'Arched_Eyebrows', 'Attractive',
 
 
 def run_prediction(img):
+    feature_values = []
     img = np.expand_dims(img, axis=0)
     img = img / 255.
     home_dir = os.path.expanduser("~")
