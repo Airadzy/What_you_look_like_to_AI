@@ -1,14 +1,6 @@
 import numpy as np
 from keras.models import load_model
-from keras.preprocessing import image
-import os
 import pandas as pd
-import keras
-import tensorflow as tf
-
-print("Keras version:", keras.__version__)
-print("TensorFlow version:", tf.__version__)  # make sure its 2.15.0 !!!!
-
 
 column_names = ['image_id', '5_o_Clock_Shadow', 'Arched_Eyebrows', 'Attractive',
                 'Bags_Under_Eyes', 'Bald', 'Bangs', 'Big_Lips', 'Big_Nose',
@@ -23,16 +15,21 @@ column_names = ['image_id', '5_o_Clock_Shadow', 'Arched_Eyebrows', 'Attractive',
 
 
 def run_prediction(img):
+    """
+    Gets the image taken on gradio App and.
+    Uses the model to make the predictions over the photo and creates a string of 'feature yes. feature no'
+    @param img: Image taken on gradio app
+    @type img: jpg
+    @return: returns a string saying yes or no for the features
+    @rtype: string
+    """
     feature_values = []
     img = np.expand_dims(img, axis=0)
     img = img / 255.
-    home_dir = os.path.expanduser("~")
-    downloads_path_os = os.path.join(home_dir, 'Downloads')
-    h5_file_path = os.path.join(downloads_path_os, 'RESNET_MODEL.h5')
+    h5_file_path = '../models/RESNET_MODEL.h5'
     model = load_model(h5_file_path)
 
     predictions = model.predict(img)
-    # print("Predictions:", predictions)
 
     predictions = np.where(predictions > 0.4, 1, 0)
     connections = pd.DataFrame(predictions, columns=column_names[1:])
@@ -44,5 +41,5 @@ def run_prediction(img):
         feature_values.append(f"{feature_name}, {feature_value}")
 
     result_string = '. '.join(feature_values)
-    print(result_string)
+    # print(result_string)
     return result_string
