@@ -53,5 +53,44 @@ Project Organization
 
 
 --------
+# What you look like to AI
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+https://medium.com/@airadzy/what-you-look-like-to-ai-e87af80b2c01
+
+## Want to make your app?
+## Setup
+
+Clone this repo, and setup and activate a virtualenv:
+
+```bash
+python3 -m pip install virtualenv
+python3 -m virtualenv venv
+source venv/bin/activate
+```
+
+Then, install the dependencies:
+`pip install -r requirements.txt`
+
+Make sure you install ffmpeg. Example for MacOs:
+`brew install ffmpeg `
+
+or for windows:
+`choco install ffmpeg`
+
+
+Make a, [OpenAI](https://beta.openai.com/), and [ElevenLabs](https://elevenlabs.io) account and set your tokens:
+
+```
+Insert your tokens on the config.json
+openai_api_key=<token>
+elevenlabs_api_key=<eleven-token>
+```
+## Run it!
+
+In on terminal, run the webcam capture:
+```bash
+python what_you_look_like.py
+```
+And open the gradio API 
+
+
