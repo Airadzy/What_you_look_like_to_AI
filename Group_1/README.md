@@ -55,12 +55,12 @@ Project Organization
 --------
 # What you look like to AI
 
-https://medium.com/@airadzy/what-you-look-like-to-ai-e87af80b2c01
+Read the Medium write-up [here.](https://medium.com/@airadzy/what-you-look-like-to-ai-e87af80b2c01) 
 
 ## Want to make your app?
 ## Setup
 
-Clone this repo, and setup and activate a virtualenv:
+1. Clone this repo, and setup and activate a virtualenv:
 
 ```bash
 python3 -m pip install virtualenv
@@ -68,7 +68,20 @@ python3 -m virtualenv venv
 source venv/bin/activate
 ```
 
-Then, install the dependencies:
+2. Download the CelebA dataset from Kaggle:
+```bash
+# Install the Kaggle package
+pip install kaggle
+
+# Download the kaggle.json file and set the correct permissions for the kaggle.json file
+chmod 600 ~/.kaggle/kaggle.json
+
+# Download and unzip the dataset
+kaggle datasets download jessicali9530/celeba-dataset -p celeba_dataset --unzip
+
+```
+
+3. Install the dependencies:
 `pip install -r requirements.txt`
 
 Make sure you install ffmpeg. Example for MacOs:
@@ -78,7 +91,7 @@ or for windows:
 `choco install ffmpeg`
 
 
-Make a, [OpenAI](https://beta.openai.com/), and [ElevenLabs](https://elevenlabs.io) account and set your tokens:
+Make an, [OpenAI](https://beta.openai.com/), and [ElevenLabs](https://elevenlabs.io) account and set your tokens:
 
 ```
 Insert your tokens on the config.json
