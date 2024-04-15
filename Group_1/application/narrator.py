@@ -10,12 +10,7 @@ import numpy as np
 with open('config.json') as config_file:
     config = json.load(config_file)
 
-os.environ["PATH"] += os.pathsep + config["ffmpeg_path"]
-os.environ["FFMPEG"] = os.path.abspath(config["ffmpeg_exe"])
-os.environ["FFPROBE"] = os.path.abspath(config["ffprobe_exe"])
-
-
-def text_generator(prediction_string, style):
+def text_generator(prediction_string, style,celebrity_name):
     """
     Gets a string with a text with the features and 'yes' or 'no' for each feature
     Gets a string 'style' which is an input from gradio so people can customize the text
@@ -36,7 +31,7 @@ def text_generator(prediction_string, style):
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system",
-             "content": f"create a text that describes a person with the following attributes {style}"},
+             "content": f"create a text that describes a person with the following attributes in the style of {style}. It should start like: The person we chose for you is close to {celebrity_name} with (and then describe the attributes)"},
             {"role": "user", "content": f"{prediction_string}"}
         ],
         max_tokens=max_tokens

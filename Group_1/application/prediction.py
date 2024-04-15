@@ -23,15 +23,16 @@ def run_prediction(img):
     @return: returns a string saying yes or no for the features
     @rtype: string
     """
+
     feature_values = []
     img = np.expand_dims(img, axis=0)
     img = img / 255.
-    h5_file_path = '../models/RESNET_MODEL.h5'
+    h5_file_path = 'C:/Users/airad/Downloads/RESNET_MODEL.h5'
     model = load_model(h5_file_path)
 
     predictions = model.predict(img)
 
-    predictions = np.where(predictions > 0.4, 1, 0)
+    predictions = np.where(predictions > 0.2, 1, 0)
     connections = pd.DataFrame(predictions, columns=column_names[1:])
     pd.set_option("display.max_columns", None)
 
@@ -41,5 +42,5 @@ def run_prediction(img):
         feature_values.append(f"{feature_name}, {feature_value}")
 
     result_string = '. '.join(feature_values)
-    # print(result_string)
-    return result_string
+    print(result_string)
+    return result_string, connections
