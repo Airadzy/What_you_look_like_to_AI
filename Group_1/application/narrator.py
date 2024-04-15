@@ -10,7 +10,7 @@ import numpy as np
 with open('config.json') as config_file:
     config = json.load(config_file)
 
-def text_generator(prediction_string, style,celebrity_name):
+def text_generator(prediction_string,celebrity_name):
     """
     Gets a string with a text with the features and 'yes' or 'no' for each feature
     Gets a string 'style' which is an input from gradio so people can customize the text
@@ -23,7 +23,6 @@ def text_generator(prediction_string, style,celebrity_name):
     @return: OPEN AI generated text
     @rtype: string
     """
-    style = 'in the style of' + style
     client = OpenAI(api_key=config["openai_api_key"])
 
     max_tokens = 100
@@ -31,7 +30,7 @@ def text_generator(prediction_string, style,celebrity_name):
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system",
-             "content": f"create a text that describes a person with the following attributes in the style of {style}. It should start like: The person we chose for you is close to {celebrity_name} with (and then describe the attributes)"},
+             "content": f"create a text that describes a person with the following attributes. It should start like: The person we chose for you is close to {celebrity_name} with (and then describe the attributes)"},
             {"role": "user", "content": f"{prediction_string}"}
         ],
         max_tokens=max_tokens
