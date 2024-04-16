@@ -81,8 +81,17 @@ def main():
             --block-title-text-color: white;
             --block-label-text-color: white;
             --block-border-color: deeppink;
-            --button-secondary-background-fill: deeppink;
+            --button-secondary-background-fill: #F5BCD6;
+            --button-secondary-background-fill-hover: deeppink;
             
+        }
+        .swipe-left {
+            --button-secondary-background-fill: #E7509C;
+            --button-secondary-background-fill-hover: deeppink;
+        }
+        .swipe-right {
+            --button-secondary-background-fill: #F5BCD6;
+            --button-secondary-background-fill-hover: deeppink;
         }
         """
 
@@ -99,8 +108,8 @@ def main():
         with gr.Row(elem_classes="center image-row"):
             image_output = image_output = gr.Image(label="Possible match",height=218,width=178)
         with gr.Row():
-            swipe_left_button = gr.Button("SWIPE LEFT")
-            swipe_right_button = gr.Button("SWIPE RIGHT")
+            swipe_left_button = gr.Button("SWIPE LEFT", elem_classes="swipe-left")
+            swipe_right_button = gr.Button("SWIPE RIGHT", elem_classes="swipe-right")
         response_output = gr.Text(label="Match Response")
         audio_output = gr.Audio(label="Output audio")
 
