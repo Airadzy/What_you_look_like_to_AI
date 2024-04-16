@@ -52,11 +52,52 @@ def handle_swipe(action, matches_generator, first_match_shown):
 
 
 def main():
-    with gr.Blocks() as app:
+    css = """
+        
+        .centered-image-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .centered-image {
+            width: 400px;
+            max-height: 100%;
+        }
+        .center {
+            display: flex;
+            justify-content: center;
+        }
+        .image-row {
+            max-width: 178px;
+            margin: auto;
+        }
+        .change-color{
+            border color: pink !important
+        }
+        .dark {
+            --primary-900: deeppink !important ;
+            --block-border-color: deeppink;  /* Change to pink */
+            --block-label-border-color: deeppink;  /* Change to pink */
+            --block-title-text-color: white;
+            --block-label-text-color: white;
+            --block-border-color: deeppink;
+            --button-secondary-background-fill: deeppink;
+            
+        }
+        """
+
+    with gr.Blocks(theme='HaleyCH/HaleyCH_Theme', css=css) as app:
+        gr.set_static_paths(paths=["match.png"])
+        gr.HTML(value="""
+        <div class="centered-image-container">
+            <img src="/file=match.png" class="centered-image">
+        </div>
+        """)
         with gr.Row():
-            celebrity_input = gr.Textbox(label="Enter the name of a celebrity that you find physically attractive and press submit")
+            celebrity_input = gr.Textbox(label="Enter the name of a celebrity that you find attractive and press submit")
             submit_button = gr.Button("Submit")
-        image_output = image_output = gr.Image(label="Possible match",height=218,width=178)
+        with gr.Row(elem_classes="center image-row"):
+            image_output = image_output = gr.Image(label="Possible match",height=218,width=178)
         with gr.Row():
             swipe_left_button = gr.Button("SWIPE LEFT")
             swipe_right_button = gr.Button("SWIPE RIGHT")
@@ -80,7 +121,7 @@ def main():
             outputs=[image_output, response_output, matches_generator, first_match_shown]
         )
 
-    app.launch(share=True)
+    app.launch(share=True, allowed_paths=["application/right-swipe.png"])
 
 
 if __name__ == "__main__":
