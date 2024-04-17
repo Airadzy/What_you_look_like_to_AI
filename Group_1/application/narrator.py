@@ -10,7 +10,8 @@ import numpy as np
 with open('config.json') as config_file:
     config = json.load(config_file)
 
-def text_generator(prediction_string,celebrity_name):
+
+def text_generator(prediction_string, celebrity_name):
     """
     Gets a string with a text with the features and 'yes' or 'no' for each feature
     Gets a string 'style' which is an input from gradio so people can customize the text
@@ -30,7 +31,7 @@ def text_generator(prediction_string,celebrity_name):
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system",
-             "content": f"create a text that describes a person with the following attributes. It should start like: The person we chose for you is close to {celebrity_name} with (and then describe the attributes)"},
+             "content": f"create a text that describes a person with the following attributes in a sexy way. It should start like: The person we chose for you is close to {celebrity_name} with (and then describe the attributes)"},
             {"role": "user", "content": f"{prediction_string}"}
         ],
         max_tokens=max_tokens
@@ -97,4 +98,3 @@ def fetch_and_play_audio(text):
     audio_file_path = create_audio(text)
     audio = AudioSegment.from_mp3(audio_file_path)
     _play_with_simpleaudio(audio)
-

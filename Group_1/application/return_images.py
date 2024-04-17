@@ -48,7 +48,7 @@ def download_first_image(search_term, api_key, cx_id, download_dir="celeb_images
     return None
 
 
-def find_best_match(dataframe,csv_path):
+def find_best_match(dataframe, csv_path):
     """
         Generator that yields the image IDs from a CSV file that have the highest number of matching features
     with the given DataFrame's first row, one by one each time it's called.
@@ -61,18 +61,19 @@ def find_best_match(dataframe,csv_path):
             int: Image ID of the best matching row.
     """
 
-    # Load the CSV and calculate comparisons just once
-    csv_df = pd.read_csv(csv_path)
+    csv_df = pd.read_csv(csv_path).replace(-1, 0)
     feature_row = dataframe.iloc[0]
     comparisons = csv_df.iloc[:, 1:] == feature_row.values
     match_counts = comparisons.sum(axis=1)
-
+    print(match_counts)
+    relative_match_counts = ((match_counts / 40) * 100).astype(int).astype(str)+"%"
+    print(relative_match_counts)
     # Create a sorted list of indices from highest to lowest match count
     sorted_indices = match_counts.sort_values(ascending=False).index
 
     # Yield each image ID one by one
     for index in sorted_indices:
-        yield csv_df.iloc[index, 0]
+        yield csv_df.iloc[index, 0], relative_match_counts[index]
 
 
 

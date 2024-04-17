@@ -27,7 +27,7 @@ def run_prediction(img):
     feature_values = []
     img = np.expand_dims(img, axis=0)
     img = img / 255.
-    h5_file_path = 'C:/Users/airad/Downloads/RESNET_MODEL.h5'
+    h5_file_path = '../models/RESNET_MODEL.h5'
     model = load_model(h5_file_path)
 
     predictions = model.predict(img)
