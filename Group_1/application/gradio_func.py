@@ -90,8 +90,8 @@ def main():
             --button-secondary-background-fill-hover: deeppink;
         }
         .swipe-right {
-            --button-secondary-background-fill: #F5BCD6;
-            --button-secondary-background-fill-hover: deeppink;
+            --button-secondary-background-fill: palegreen;
+            --button-secondary-background-fill-hover: lawngreen;
         }
         """
 
